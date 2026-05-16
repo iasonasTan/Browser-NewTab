@@ -1,0 +1,184 @@
+<html>
+    <head>
+        <meta charset="UTF-8" />
+    </head>
+    <body>
+        <style>
+            #input {
+                background-color: transparent;
+                backdrop-filter: blur(8px) brightness(0.8);
+                border: 1px white solid;
+                border-radius: 6px;
+                width: 400px;
+                height: 40px;
+                color: white;
+                text-align: center;
+                margin-left: 10px;
+                font-size: 20px;
+            }
+            #input:focus {
+                outline: none;
+            }
+
+            #label {
+                font-size: 50px;
+            }
+            .element {
+                margin: 10px;
+                color: white;
+                font-family: serif;
+            }
+            #center {
+                align-items: left;
+                display: flex;
+                flex-direction: column;
+                background-color: transparent;
+                margin-left: auto;
+                margin-right: auto;
+                width: fit-content;
+                height: fit-content;
+            }
+            body {
+                background-image: url("./res/bg.jpg");
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position-x: center;
+                background-position-y: 0;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-end;
+                min-height: 100vh;
+            }
+            #apps {
+                display: flex;
+                flex-direction: column;
+                width: 500px;
+                height: 300px;
+                overflow-y: auto;
+            }
+            .app {
+                font-family: sans-serif;
+                text-decoration: underline;
+                margin-top: 4px;
+                color: white;
+                text-decoration: none;
+            }
+        </style>
+
+        <div id="center">
+            <span class="element" id="label">Эта чёртова жизнь забавная.</span>
+            <input type="text" id="input" />
+            <span class="element" id="apps"></span>
+        </div>
+
+        <script>
+            window.addEventListener("load", () => {
+                // Favourite urls, this list can contain evert valid URL.
+                const appsUrl = [
+                    "instagram.com", // 0
+                    "threads.com",
+                    "claude.ai",
+                    "gemini.google.com/app", // 3
+                    "youtube.com",
+                    "pinterest.com",
+                    "github.com", // 6
+                    "tasks.google.com",
+                    "mail.google.com",
+                    "calendar.google.com", // 9
+                    "www.google.com/search?q=translate",
+                    "github.com/iasonasTan?tab=repositories",
+                    "discord.com/channels/@me",
+                ];
+
+                // Indexes of appsUrl marking the favourite utils
+                // These urls can be oppened by typing '@utils' in searchbar and pressing enter
+                const utils_idxs = [2, 7, 8, 9];
+
+                // Views that will be used.
+                const input = document.querySelector("#input");
+                const appsList = document.querySelector("#apps");
+
+                // If given text is related to a favourite url, this url gets returned.
+                // If given text is NOT related to a favourite url, url to google search gets returned.
+                function relationOrSearch(text) {
+                    // Iterate through all urls
+                    for (let i = 0; i < appsUrl.length; i++) {
+                        let url = appsUrl[i];
+                        // Checks for almost any relation between url[n] and given text.
+                        if (url.includes(text) || text.includes(url)) {
+                            // Complete and return related url
+                            return "https://" + url;
+                        }
+                    }
+                    // Return google search url
+                    return "https://google.com/search?q=" + text;
+                }
+
+                // Iterates through all favourite urls and puts a link in html
+                // for each one that is related with the given text.
+                function updateAppsList(text) {
+                    // Message to show when there's no apps.
+                    const NO_APPS_MSG = "No apps.";
+
+                    // Default HTML to put.
+                    let appsViews = `<a class="app" href="https://instagram.com/iasonas_tan">${NO_APPS_MSG}</a>`;
+                    // Iterate through all urls.
+                    for (let i = 0; i < appsUrl.length; i++) {
+                        let url = appsUrl[i];
+                        // Check for almost any relation between url[n] and text.
+                        if (url.includes(text) || text.includes(url)) {
+                            // Clear default text IF it is still there.
+                            if (appsViews.includes(NO_APPS_MSG)) {
+                                appsViews = "";
+                            }
+                            // Create a link view with the url and put in in appViews
+                            const fullURL = "https://" + url;
+                            appsViews += `<a class="app" href="${fullURL}">${fullURL}</a>`;
+                        }
+                    }
+                    // Upate appsList html.
+                    appsList.innerHTML = appsViews;
+                }
+
+                // Opens all utils in new tabs
+                function openUtils() {
+                    // Loop through each util app URL and open it in a new tab
+                    utils_idxs.forEach((url_idx, index) => {
+                        // Get url from appsUrl and open it in a new tab
+                        window.open(
+                            "https://" + appsUrl[url_idx],
+                            `_blank_${index}`,
+                        );
+                    });
+                    window.close();
+                }
+
+                // Update apps list whenever main input text is changed
+                input.addEventListener("input", (event) => {
+                    updateAppsList(event.target.value);
+                });
+
+                // When Enter is pressed, open most related url.
+                window.addEventListener("keydown", (event) => {
+                    // Check if pressed key is 'Enter'
+                    if (event.key == "Enter") {
+                        const text = input.value;
+                        if (text == "@utils") {
+                            openUtils();
+                        } else {
+                            let url = relationOrSearch(text);
+                            window.location.href = url;
+                        }
+                    }
+                });
+
+                // Show all apps
+                updateAppsList("");
+                // Give focus to main input
+                input.focus();
+            });
+        </script>
+    </body>
+</html>
