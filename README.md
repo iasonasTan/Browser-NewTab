@@ -25,3 +25,6 @@ If your browser supports changing the 'new tab' url, things are very easy, you c
 **BUT**
 
 if your browser dosn't have this setting, then you have to make a home server that runs locally and set `http://localhost:XX' as url propably via an extension.
+
+That's the default style of the page:
+<img width="500" alt="image" src="https://github.com/user-attachments/assets/3f325713-4884-457e-b5a5-1e51144b3a7d" />
