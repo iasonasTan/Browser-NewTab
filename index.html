@@ -69,7 +69,7 @@
 
         <div id="center">
             <span class="element" id="label">Эта чёртова жизнь забавная.</span>
-            <input type="text" id="input" />
+            <input type="text" id="input" autofocus />
             <span class="element" id="apps"></span>
         </div>
 
@@ -176,8 +176,13 @@
 
                 // Show all apps
                 updateAppsList("");
-                // Give focus to main input
-                input.focus();
+
+                // Wait a few millis and:
+                // Waiting because browsers will give focus to url-bar after window.onLoad is executed.
+                setTimeout(() => {
+                    // Give focus to main input
+                    input.focus();
+                }, 250);
             });
         </script>
     </body>
