@@ -1,0 +1,41 @@
+body {
+    background-image: url("./res/bg.jpg");
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    background-position-y: 0;
+}
+
+#input {
+    background-color: transparent;
+    backdrop-filter: blur(8px) brightness(0.8);
+    border: 1px white solid;
+    border-radius: 6px;
+    color: white;
+    font-size: 20px;
+}
+
+#input:focus {
+    outline: none;
+}
+
+#label {
+    font-size: 50px;
+}
+
+.element {
+    color: white;
+    font-family: serif;
+}
+
+#center {
+    background-color: transparent;
+}
+
+.app {
+    font-family: sans-serif;
+    text-decoration: underline;
+    color: white;
+    text-decoration: none;
+}
