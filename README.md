@@ -34,7 +34,7 @@ You can do this using darkhttpd (linux):
 5. Install NewTabOverride extension on your browser and set the above URL as new and home tab url.
 
 ```bash
-sudo pacman -S darkhttpd # Manjaro/Arch
+sudo pacman -S darkhttpd   # Manjaro/Arch
 sudo apt install darkhttpd # Debian/Ubuntu
 sudo dnf install darkhttpd # Fedora
 ```
